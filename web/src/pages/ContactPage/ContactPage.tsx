@@ -1,4 +1,4 @@
-import { Mutation, MutationcreateContactArgs } from 'types/graphql'
+import { CreateContact, CreateContactVariables } from 'types/graphql'
 
 import {
   Form,
@@ -32,8 +32,8 @@ const ContactPage = () => {
   const formMethods = useForm({ mode: 'onBlur' })
 
   const [createContact, { loading, error }] = useMutation<
-    Mutation['createContact'],
-    MutationcreateContactArgs
+    CreateContact,
+    CreateContactVariables
   >(CREATE_CONTACT, {
     onCompleted: () => {
       toast.success('Thank you for your submission!')
