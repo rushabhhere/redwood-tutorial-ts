@@ -1,7 +1,7 @@
-# Redwood Tutorial App (TypeScript)
+# Redwood Tutorial App
 
 This repo represents the state of the app at the interval created during the [Redwood Tutorial](https://redwoodjs.com/tutorial).
-It is meant to be a starting point for those working on the second half of the Tutorial, starting at the [Intermission](https://redwoodjs.com/docs/tutorial/intermission) and wishing to continue with TypeScript.
+It is meant to be a starting point for those working on the second half of the Tutorial, starting at the [Intermission](https://redwoodjs.com/docs/tutorial/intermission).
 
 This repo contains much more styling than the one we built together in the tutorial, but is functionally identical.
 
@@ -10,9 +10,12 @@ This repo contains much more styling than the one we built together in the tutor
 The [tutorial itself](https://redwoodjs.com/docs/tutorial/chapter1/prerequisites) contains instructions for getting this repo up and running, but here is a summary of the commands:
 
 ```bash
-git clone https://github.com/rushabhhere/redwood-tutorial-ts
-cd redwood-tutorial-ts
+git clone https://github.com/redwoodjs/redwood-tutorial
+cd redwood-tutorial
 yarn install
+yarn rw ts-to-js # if you wish to continue using JavaScript
 yarn rw prisma migrate dev
+yarn rw prisma db seed
+yarn rw g secret
 yarn rw dev
 ```
