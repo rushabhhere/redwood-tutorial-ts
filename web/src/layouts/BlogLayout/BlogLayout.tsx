@@ -58,7 +58,7 @@ const BlogLayout = ({ children }: BlogLayoutProps) => {
           )}
         </nav>
       </header>
-      <main className="max-w-4xl mx-auto my-8 p-12 bg-white shadow rounded-b">
+      <main className="max-w-4xl mx-auto p-12 bg-white shadow rounded-b">
         {children}
       </main>
     </>

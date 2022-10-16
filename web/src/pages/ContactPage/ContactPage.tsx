@@ -1,21 +1,24 @@
-import { CreateContact, CreateContactVariables } from 'types/graphql'
+import {
+  CreateContactMutation,
+  CreateContactMutationVariables,
+} from 'types/graphql'
 
 import {
+  FieldError,
   Form,
+  FormError,
+  Label,
   Submit,
   SubmitHandler,
-  TextField,
   TextAreaField,
-  FieldError,
-  Label,
-  FormError,
+  TextField,
   useForm,
 } from '@redwoodjs/forms'
 import { MetaTags, useMutation } from '@redwoodjs/web'
 import { toast, Toaster } from '@redwoodjs/web/toast'
 
 const CREATE_CONTACT = gql`
-  mutation CreateContact($input: CreateContactInput!) {
+  mutation CreateContactMutation($input: CreateContactInput!) {
     createContact(input: $input) {
       id
     }
@@ -31,9 +34,9 @@ interface FormValues {
 const ContactPage = () => {
   const formMethods = useForm({ mode: 'onBlur' })
 
-  const [createContact, { loading, error }] = useMutation<
-    CreateContact,
-    CreateContactVariables
+  const [create, { loading, error }] = useMutation<
+    CreateContactMutation,
+    CreateContactMutationVariables
   >(CREATE_CONTACT, {
     onCompleted: () => {
       toast.success('Thank you for your submission!')
@@ -41,8 +44,8 @@ const ContactPage = () => {
     },
   })
 
-  const handleSubmit: SubmitHandler<FormValues> = (data) => {
-    createContact({ variables: { input: data } })
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    create({ variables: { input: data } })
   }
 
   return (
@@ -50,11 +53,12 @@ const ContactPage = () => {
       <MetaTags title="Contact" description="Contact page" />
 
       <Toaster />
-      <Form onSubmit={handleSubmit} error={error} formMethods={formMethods}>
+      <Form formMethods={formMethods} onSubmit={onSubmit} error={error}>
         <FormError
           error={error}
           wrapperClassName="py-4 px-6 rounded-lg bg-red-100 text-red-700"
           listClassName="list-disc ml-4"
+          listItemClassName=""
         />
         <Label
           name="name"
@@ -65,9 +69,9 @@ const ContactPage = () => {
         </Label>
         <TextField
           name="name"
+          validation={{ required: true }}
           className="border rounded-sm px-2 py-1 outline-none"
           errorClassName="border rounded-sm px-2 py-1 border-red-700 outline-none"
-          validation={{ required: true }}
         />
         <FieldError name="name" className="block text-red-700" />
 
@@ -83,7 +87,7 @@ const ContactPage = () => {
           validation={{
             required: true,
             pattern: {
-              value: /^[^@]+@[^.]+\..+$/,
+              value: /[^@]+@[^.]+\..+/,
               message: 'Please enter a valid email address',
             },
           }}

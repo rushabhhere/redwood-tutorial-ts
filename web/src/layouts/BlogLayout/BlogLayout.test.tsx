@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@redwoodjs/testing/web'
+import { render, screen, waitFor } from '@redwoodjs/testing'
 
 import BlogLayout from './BlogLayout'
 

@@ -7,11 +7,23 @@ import {
   Submit,
 } from '@redwoodjs/forms'
 
+import type { EditPostById, UpdatePostInput } from 'types/graphql'
+import type { RWGqlError } from '@redwoodjs/forms'
 
 
-const PostForm = (props) => {
-  const onSubmit = (data) => {
 
+
+type FormPost = NonNullable<EditPostById['post']>
+
+interface PostFormProps {
+  post?: EditPostById['post']
+  onSave: (data: UpdatePostInput, id?: FormPost['id']) => void
+  error: RWGqlError
+  loading: boolean
+}
+
+const PostForm = (props: PostFormProps) => {
+  const onSubmit = (data: FormPost) => {
   
     
     
@@ -24,7 +36,7 @@ const PostForm = (props) => {
 
   return (
     <div className="rw-form-wrapper">
-      <Form onSubmit={onSubmit} error={props.error}>
+      <Form<FormPost> onSubmit={onSubmit} error={props.error}>
         <FormError
           error={props.error}
           wrapperClassName="rw-form-error-wrapper"
